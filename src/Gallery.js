@@ -16,18 +16,75 @@ class Thumbnail extends React.Component {
 
   render() {
     return (
-      <a onClick={this.handleClick}>
+      <a className="Thumbnail" onClick={this.handleClick}>
         <img src={this.props.image.thumbnailUrl} alt={this.props.image.name} />
       </a>
     );
   }
 }
 
-class FullImage extends React.Component {
+class DescriptionForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {value: props.description || ''};
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+
+  handleSubmit(event) {
+    this.props.updateDescription(this.state.value);
+    event.preventDefault();
+  }
+
   render() {
     return (
-      <div>
+      <form onSubmit={this.handleSubmit}>
+        <textarea value={this.state.value} onChange={this.handleChange} />
+        <input type="submit" value="Save" />
+      </form>
+    );
+  }
+}
+
+class FullImage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      description: null,
+      editingDescription: false
+    };
+
+    this.editDescription = this.editDescription.bind(this);
+    this.updateDescription = this.updateDescription.bind(this);
+  }
+
+  editDescription() {
+    this.setState({editingDescription: true});
+  }
+
+  updateDescription(description) {
+    this.setState({
+      description: description,
+      editingDescription: false
+    });
+  }
+
+  render() {
+    return (
+      <div className="FullImage">
         <h1>{this.props.image.title}</h1>
+
+        {this.state.description && !this.state.editingDescription && <p>{this.state.description}</p>}
+        {this.state.editingDescription
+          ? <DescriptionForm description={this.state.description} updateDescription={this.updateDescription} />
+          : <a onClick={this.editDescription}>{this.state.description ? 'Edit' : 'Add'} Description</a>
+        }
+
         <img src={this.props.image.url} alt={this.props.image.name} />
       </div>
     );
