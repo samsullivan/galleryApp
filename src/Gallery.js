@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactModal from 'react-modal';
+import jsonFetch from 'json-fetch'
 
 class Thumbnail extends React.Component {
   constructor(props) {
@@ -36,10 +37,17 @@ class FullImage extends React.Component {
 class Gallery extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {selectedImage: null};
+    this.state = {
+      images: [],
+      selectedImage: null
+    };
 
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+
+    jsonFetch('https://jsonplaceholder.typicode.com/photos').then(response => {
+      this.setState({images: response.body.splice(0, 25)});
+    });
   }
 
   openModal(image) {
@@ -53,7 +61,7 @@ class Gallery extends React.Component {
   render() {
     return (
       <div className="Gallery">
-        {this.props.images.map((image) =>
+        {this.state.images.map((image) =>
           <Thumbnail selectImage={this.openModal} image={image} key={image.id} />
         )}
         <ReactModal
