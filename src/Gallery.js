@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactModal from 'react-modal';
 import jsonFetch from 'json-fetch';
+import './Gallery.sass';
 
 class Thumbnail extends React.Component {
   constructor(props) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import Gallery from './Gallery';
-import './App.css';
+import './App.sass';
 
 class App extends React.Component {
   render() {
