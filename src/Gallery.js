@@ -60,6 +60,19 @@ class Gallery extends React.Component {
           isOpen={!!this.state.selectedImage}
           onRequestClose={this.closeModal}
           contentLabel="Image"
+          style={{
+            overlay: {
+              backgroundColor: 'rgba(0, 0, 0, 0.75)'
+            },
+            content: {
+              top: '25px',
+              right: 'auto',
+              bottom: 'auto',
+              left: '50%',
+              width: '600px',
+              marginLeft: '-320px'
+            }
+          }}
         >
           <FullImage image={this.state.selectedImage} />
         </ReactModal>
