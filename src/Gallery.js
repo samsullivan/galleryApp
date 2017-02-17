@@ -48,7 +48,7 @@ class DescriptionForm extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <textarea value={this.state.value} onChange={this.handleChange} />
-        <input type="submit" value="Save" />
+        <input type="submit" value="Save Description" />
       </form>
     );
   }
@@ -87,10 +87,14 @@ class FullImage extends React.Component {
       <div className="FullImage">
         <h1>{this.props.image.title}</h1>
 
-        {this.state.description && !this.state.editingDescription && <p>{this.state.description}</p>}
         {this.state.editingDescription
           ? <DescriptionForm description={this.state.description} updateDescription={this.updateDescription} />
-          : <a onClick={this.editDescription}>{this.state.description ? 'Edit' : 'Add'} Description</a>
+          : (
+            <p>
+              {this.state.description}{this.state.description && <br />}
+              <a onClick={this.editDescription}>{this.state.description ? 'Edit' : 'Add'} Description</a>
+            </p>
+          )
         }
 
         <img src={this.props.image.url} alt={this.props.image.name} />
@@ -133,19 +137,8 @@ class Gallery extends React.Component {
           isOpen={!!this.state.selectedImage}
           onRequestClose={this.closeModal}
           contentLabel="Image"
-          style={{
-            overlay: {
-              backgroundColor: 'rgba(0, 0, 0, 0.75)'
-            },
-            content: {
-              top: '25px',
-              right: 'auto',
-              bottom: 'auto',
-              left: '50%',
-              width: '600px',
-              marginLeft: '-320px'
-            }
-          }}
+          className="ModalContent"
+          overlayClassName="ModalOverlay"
         >
           <FullImage image={this.state.selectedImage} />
         </ReactModal>
