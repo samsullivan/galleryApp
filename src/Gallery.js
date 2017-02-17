@@ -17,9 +17,11 @@ class Thumbnail extends React.Component {
 
   render() {
     return (
-      <a className="Thumbnail" onClick={this.handleClick}>
-        <img src={this.props.image.thumbnailUrl} alt={this.props.image.name} />
-      </a>
+      <div className="Thumbnail">
+        <a onClick={this.handleClick}>
+          <img src={this.props.image.thumbnailUrl} alt={this.props.image.name} />
+        </a>
+      </div>
     );
   }
 }
