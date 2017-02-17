@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactModal from 'react-modal';
-import jsonFetch from 'json-fetch'
+import jsonFetch from 'json-fetch';
 
 class Thumbnail extends React.Component {
   constructor(props) {
@@ -55,7 +55,7 @@ class FullImage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      description: null,
+      description: localStorage.getItem(this.descriptionKey()) || '',
       editingDescription: false
     };
 
@@ -63,11 +63,16 @@ class FullImage extends React.Component {
     this.updateDescription = this.updateDescription.bind(this);
   }
 
+  descriptionKey() {
+    return 'imageDescription-' + this.props.image.id;
+  }
+
   editDescription() {
     this.setState({editingDescription: true});
   }
 
   updateDescription(description) {
+    localStorage.setItem(this.descriptionKey(), description);
     this.setState({
       description: description,
       editingDescription: false
